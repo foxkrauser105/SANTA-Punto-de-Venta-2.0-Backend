@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Backend.Data
+namespace SANTA.PoS.Data
 {
     public class AppDbContext : DbContext
     {

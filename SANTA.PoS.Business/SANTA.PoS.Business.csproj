@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Backend.Domain\Backend.Domain.csproj" />
-    <ProjectReference Include="..\Backend.Data\Backend.Data.csproj" />
+    <ProjectReference Include="..\SANTA.PoS.Data\SANTA.PoS.Data.csproj" />
+    <ProjectReference Include="..\SANTA.PoS.Domain\SANTA.PoS.Domain.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
-using Backend.Data;
+using SANTA.PoS.Data;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Backend.Controllers
+namespace SANTA.PoS.Controllers
 {
     [ApiController]
     [Route("[controller]")]

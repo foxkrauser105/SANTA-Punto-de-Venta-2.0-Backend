@@ -1,4 +1,4 @@
-namespace Backend
+namespace SANTA.PoS
 {
     public class WeatherForecast
     {

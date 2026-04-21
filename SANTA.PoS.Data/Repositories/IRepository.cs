@@ -1,4 +1,4 @@
-namespace Backend.Data.Repositories;
+namespace SANTA.PoS.Data.Repositories;
 
 /// <summary>
 /// Generic repository interface for data access

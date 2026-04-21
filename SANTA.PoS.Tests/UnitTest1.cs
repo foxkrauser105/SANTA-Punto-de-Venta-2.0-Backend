@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace Backend.Tests;
+namespace SANTA.PoS.Tests;
 
 public class UnitTest1
 {

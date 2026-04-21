@@ -1,4 +1,4 @@
-namespace Backend.Domain.Entities;
+namespace SANTA.PoS.Domain.Entities;
 
 /// <summary>
 /// Base entity class - all domain entities should inherit from this

@@ -1,6 +1,6 @@
 using Microsoft.OpenApi;
 using Microsoft.EntityFrameworkCore;
-using Backend.Data;
+using SANTA.PoS.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

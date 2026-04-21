@@ -16,9 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Backend.Domain\Backend.Domain.csproj" />
-    <ProjectReference Include="..\Backend.Business\Backend.Business.csproj" />
-    <ProjectReference Include="..\Backend.Data\Backend.Data.csproj" />
+    <ProjectReference Include="..\SANTA.PoS.Business\SANTA.PoS.Business.csproj" />
+    <ProjectReference Include="..\SANTA.PoS.Data\SANTA.PoS.Data.csproj" />
+    <ProjectReference Include="..\SANTA.PoS.Domain\SANTA.PoS.Domain.csproj" />
   </ItemGroup>
 
 </Project>

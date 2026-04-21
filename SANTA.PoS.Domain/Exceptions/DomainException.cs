@@ -1,4 +1,4 @@
-namespace Backend.Domain.Exceptions;
+namespace SANTA.PoS.Domain.Exceptions;
 
 /// <summary>
 /// Base exception for business logic errors

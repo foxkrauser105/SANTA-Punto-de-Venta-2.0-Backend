@@ -1,6 +1,6 @@
-using Backend.Domain.Entities;
+using SANTA.PoS.Domain.Entities;
 
-namespace Backend.Data.Repositories;
+namespace SANTA.PoS.Data.Repositories;
 
 /// <summary>
 /// Generic repository implementation - extend this for specific entities
