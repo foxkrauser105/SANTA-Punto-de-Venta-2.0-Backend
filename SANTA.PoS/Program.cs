@@ -1,16 +1,32 @@
 using Microsoft.OpenApi;
 using Microsoft.EntityFrameworkCore;
-using SANTA.PoS.Data;
+using SANTA.PoS.Business.Interfaces;
+using SANTA.PoS.Business.Mappings;
+using SANTA.PoS.Business.Services;
+using SANTA.PoS.Data.Persistence;
+using SANTA.PoS.Data.Repositories;
+using SANTA.PoS.Middleware;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add DB Context to the container.
 
-builder.Services.AddDbContext<AppDbContext>(options =>
+builder.Services.AddDbContext<SantaContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         sqlOptions => sqlOptions.EnableRetryOnFailure()
     ));
+
+// Add services to the container.
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ProductService>();
+
+// Add AutoMapper
+builder.Services.AddAutoMapper(cfg =>
+{
+    cfg.AddProfile<MappingProfile>();
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -26,6 +42,9 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 var app = builder.Build();
+
+// Add global exception handling middleware
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
