@@ -15,6 +15,7 @@ public abstract class BaseRepository<TClass, TKey>(SantaContext context) : IBase
 
     public virtual async Task<TClass> CreateAsync(TClass entity)
     {
+        ArgumentNullException.ThrowIfNull(entity, nameof(entity));
         await GetDbSet().AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity;
@@ -22,6 +23,7 @@ public abstract class BaseRepository<TClass, TKey>(SantaContext context) : IBase
 
     public virtual async Task<TClass?> GetByIdAsync(TKey id)
     {
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
         return await GetDbSet().FindAsync(id);
     }
 
@@ -38,6 +40,7 @@ public abstract class BaseRepository<TClass, TKey>(SantaContext context) : IBase
 
     public virtual async Task DeleteAsync(TKey id)
     {
+        ArgumentNullException.ThrowIfNull(id, nameof(id));
         var entity = await GetByIdAsync(id);
         if (entity is not null)
         {

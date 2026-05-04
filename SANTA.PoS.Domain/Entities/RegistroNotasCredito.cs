@@ -8,7 +8,7 @@ public partial class RegistroNotasCredito
 
     public int Detalle { get; set; }
 
-    public string IdProducto { get; set; } = null!;
+    public int ProductoId { get; set; }
 
     public double Cantidad { get; set; }
 
@@ -20,5 +20,5 @@ public partial class RegistroNotasCredito
 
     public int Descuento { get; set; }
 
-    public virtual Producto IdProductoNavigation { get; set; } = null!;
+    public virtual Producto Producto { get; set; } = null!;
 }

@@ -1,5 +1,5 @@
-﻿using SANTA.PoS.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SANTA.PoS.Domain.Entities;
 
 namespace SANTA.PoS.Data.Persistence;
 
@@ -87,14 +87,15 @@ public partial class SantaContext : DbContext
 
         modelBuilder.Entity<Descuento>(entity =>
         {
-            entity.HasKey(e => e.IdProducto);
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("descuentos");
 
-            entity.Property(e => e.IdProducto)
-                .HasMaxLength(20)
-                .IsUnicode(false)
-                .HasColumnName("id_producto");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
+
+            entity.Property(e => e.ProductoId).HasColumnName("id_producto");
             entity.Property(e => e.CantidadMinima).HasColumnName("cantidadMinima");
             entity.Property(e => e.PrecioDescuento)
                 .HasColumnType("decimal(16, 2)")
@@ -103,8 +104,8 @@ public partial class SantaContext : DbContext
                 .HasDefaultValue(1, "DF_descuentos_status")
                 .HasColumnName("status");
 
-            entity.HasOne(d => d.IdProductoNavigation).WithOne(p => p.Descuento)
-                .HasForeignKey<Descuento>(d => d.IdProducto)
+            entity.HasOne(d => d.Producto).WithOne(p => p.Descuento)
+                .HasForeignKey<Descuento>(d => d.ProductoId)
                 .HasConstraintName("FK_descuentos_productos");
         });
 
@@ -187,13 +188,18 @@ public partial class SantaContext : DbContext
 
         modelBuilder.Entity<Producto>(entity =>
         {
-            entity.HasKey(e => e.IdProducto);
+            entity.HasKey(e => e.Id);
 
             entity.ToTable("productos");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("id");
 
             entity.Property(e => e.IdProducto)
                 .HasMaxLength(20)
                 .IsUnicode(false)
+                .IsRequired()
                 .HasColumnName("id_producto");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
             entity.Property(e => e.Categoria)
@@ -235,9 +241,7 @@ public partial class SantaContext : DbContext
                 .HasDefaultValueSql("(getdate())", "DF_registro_notas_credito_fechaSurtido")
                 .HasColumnType("datetime")
                 .HasColumnName("fechaSurtido");
-            entity.Property(e => e.IdProducto)
-                .HasMaxLength(20)
-                .IsUnicode(false)
+            entity.Property(e => e.ProductoId)
                 .HasColumnName("id_producto");
             entity.Property(e => e.Importe)
                 .HasColumnType("decimal(16, 2)")
@@ -246,8 +250,8 @@ public partial class SantaContext : DbContext
                 .HasColumnType("decimal(16, 2)")
                 .HasColumnName("precio");
 
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.RegistroNotasCreditos)
-                .HasForeignKey(d => d.IdProducto)
+            entity.HasOne(d => d.Producto).WithMany(p => p.RegistroNotasCreditos)
+                .HasForeignKey(d => d.ProductoId)
                 .HasConstraintName("FK_registro_notas_credito_productos");
         });
 
@@ -260,9 +264,7 @@ public partial class SantaContext : DbContext
             entity.Property(e => e.IdRegistro).HasColumnName("id_registro");
             entity.Property(e => e.Cantidad).HasColumnName("cantidad");
             entity.Property(e => e.Descuento).HasColumnName("descuento");
-            entity.Property(e => e.IdProducto)
-                .HasMaxLength(20)
-                .IsUnicode(false)
+            entity.Property(e => e.ProductoId)
                 .HasColumnName("id_producto");
             entity.Property(e => e.IdVenta).HasColumnName("id_venta");
             entity.Property(e => e.Ncfolio).HasColumnName("ncfolio");
@@ -271,8 +273,8 @@ public partial class SantaContext : DbContext
                 .HasColumnType("decimal(16, 2)")
                 .HasColumnName("precio");
 
-            entity.HasOne(d => d.IdProductoNavigation).WithMany(p => p.RegistroVenta)
-                .HasForeignKey(d => d.IdProducto)
+            entity.HasOne(d => d.Producto).WithMany(p => p.RegistroVenta)
+                .HasForeignKey(d => d.ProductoId)
                 .HasConstraintName("FK_registro_ventas_productos");
 
             entity.HasOne(d => d.IdVentaNavigation).WithMany(p => p.RegistroVenta)

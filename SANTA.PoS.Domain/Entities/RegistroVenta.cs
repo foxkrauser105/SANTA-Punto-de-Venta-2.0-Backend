@@ -6,7 +6,7 @@ public partial class RegistroVenta
 
     public int IdVenta { get; set; }
 
-    public string IdProducto { get; set; } = null!;
+    public int ProductoId { get; set; }
 
     public decimal? Precio { get; set; }
 
@@ -18,7 +18,7 @@ public partial class RegistroVenta
 
     public int? Ncfolio { get; set; }
 
-    public virtual Producto IdProductoNavigation { get; set; } = null!;
+    public virtual Producto Producto { get; set; } = null!;
 
     public virtual Venta IdVentaNavigation { get; set; } = null!;
 }

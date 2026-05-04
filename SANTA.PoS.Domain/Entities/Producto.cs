@@ -2,6 +2,8 @@
 
 public partial class Producto
 {
+    public int Id { get; set; }
+
     public string IdProducto { get; set; } = null!;
 
     public string Nombre { get; set; } = null!;

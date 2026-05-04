@@ -1,6 +1,4 @@
 using SANTA.PoS.Domain.Exceptions;
-using System.Net;
-using System.Text.Json;
 
 namespace SANTA.PoS.Middleware;
 

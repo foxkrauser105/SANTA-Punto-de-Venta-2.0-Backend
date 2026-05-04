@@ -1,5 +1,5 @@
-using Microsoft.OpenApi;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using SANTA.PoS.Business.Interfaces;
 using SANTA.PoS.Business.Mappings;
 using SANTA.PoS.Business.Services;
@@ -36,8 +36,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "Title",
-        Description = "API for [insert description here]",
+        Title = "SANTA PoS API",
+        Description = "API for managing products in the SANTA PoS system",
     });
 });
 

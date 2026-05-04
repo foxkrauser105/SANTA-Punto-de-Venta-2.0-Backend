@@ -2,7 +2,9 @@
 
 public partial class Descuento
 {
-    public string IdProducto { get; set; } = null!;
+    public int Id { get; set; }
+
+    public int ProductoId { get; set; }
 
     public double CantidadMinima { get; set; }
 
@@ -10,5 +12,5 @@ public partial class Descuento
 
     public int Status { get; set; }
 
-    public virtual Producto IdProductoNavigation { get; set; } = null!;
+    public virtual Producto Producto { get; set; } = null!;
 }

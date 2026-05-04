@@ -41,7 +41,21 @@ public class ProductsController(ProductService productService) : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProduct(string id, [FromBody] CreateUpdateProductDto product)
     {
-        await _productService.UpdateProductAsync(product);
+        await _productService.UpdateProductDataAsync(id, product);
+        return NoContent();
+    }
+
+    [HttpPut("Status/{id}")]
+    public async Task<IActionResult> UpdateProductStatus(string id, [FromBody] CreateUpdateProductDto product)
+    {
+        await _productService.UpdateProductStatusAsync(id, product);
+        return NoContent();
+    }
+
+    [HttpPut("Descuento/{id}")]
+    public async Task<IActionResult> UpdateProductDiscount(string id, [FromBody] CreateUpdateProductDto product)
+    {
+        await _productService.UpdateProductDiscountAsync(id, product);
         return NoContent();
     }
 
