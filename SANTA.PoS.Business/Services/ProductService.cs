@@ -117,4 +117,11 @@ public class ProductService(IProductRepository repository, IMapper mapper)
         var filteredProducts = await _repository.GetFilteredProductsAsync(filter);
         return _mapper.Map<IEnumerable<ProductDto>>(filteredProducts);
     }
+
+    public async Task<IEnumerable<ProductDto>> GetProductsWithDiscountAsync()
+    {
+        Expression<Func<Producto, bool>> filter = p => p.Descuento != null;
+        var productsWithDiscount = await _repository.GetFilteredProductsAsync(filter);
+        return _mapper.Map<IEnumerable<ProductDto>>(productsWithDiscount);
+    }
 }

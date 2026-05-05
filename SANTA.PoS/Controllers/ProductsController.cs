@@ -31,6 +31,13 @@ public class ProductsController(ProductService productService) : ControllerBase
         return Ok(products);
     }
 
+    [HttpGet("discount")]
+    public async Task<IActionResult> GetProductsWithDiscount()
+    {
+        var products = await _productService.GetProductsWithDiscountAsync();
+        return Ok(products);
+    }
+
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateUpdateProductDto product)
     {

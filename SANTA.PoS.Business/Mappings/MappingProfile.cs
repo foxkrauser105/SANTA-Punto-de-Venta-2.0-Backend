@@ -12,6 +12,7 @@ public class MappingProfile : Profile
     public MappingProfile()
     {
         // Entity to DTO mappings
+        CreateMap<Descuento, DescuentoDto>();
         CreateMap<Producto, ProductDto>();
         CreateMap<CreateUpdateProductDto, Producto>();
     }

@@ -1,6 +1,4 @@
-﻿using SANTA.PoS.Domain.Entities;
-
-namespace SANTA.PoS.Business.DTOs;
+﻿namespace SANTA.PoS.Business.DTOs;
 
 public record CreateUpdateProductDto(
     string? IdProducto,
@@ -11,7 +9,7 @@ public record CreateUpdateProductDto(
     decimal? Precio,
     int? Status,
     DateTime? Fechaultact,
-    Descuento? Descuento
+    DescuentoDto? Descuento
 );
 
 public record ProductDto(
@@ -23,5 +21,5 @@ public record ProductDto(
     decimal Precio,
     int Status,
     DateTime Fechaultact,
-    Descuento? Descuento
+    DescuentoDto? Descuento
 );
