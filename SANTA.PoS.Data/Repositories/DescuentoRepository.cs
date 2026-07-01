@@ -5,9 +5,9 @@ using SANTA.PoS.Domain.Entities;
 
 namespace SANTA.PoS.Data.Repositories;
 
-public class DescuentoRepository(SantaContext context) : IDescuentoRepository
+public class DescuentoRepository(SantaContext context) : BaseRepository<Descuento, int>(context), IDescuentoRepository
 {
-    private readonly SantaContext _context = context;
+    protected override DbSet<Descuento> GetDbSet() => _context.Descuentos;
 
     public async Task<IEnumerable<Descuento>> GetAllWithProductoAsync()
     {
@@ -21,19 +21,6 @@ public class DescuentoRepository(SantaContext context) : IDescuentoRepository
         return await _context.Descuentos
             .Include(d => d.Producto)
             .FirstOrDefaultAsync(d => d.Producto.IdProducto == idProducto);
-    }
-
-    public async Task<Descuento> CreateAsync(Descuento descuento)
-    {
-        _context.Descuentos.Add(descuento);
-        await _context.SaveChangesAsync();
-        return descuento;
-    }
-
-    public async Task UpdateAsync(Descuento descuento)
-    {
-        _context.Descuentos.Update(descuento);
-        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteByIdProductoAsync(string idProducto)
