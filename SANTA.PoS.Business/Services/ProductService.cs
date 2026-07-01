@@ -124,4 +124,34 @@ public class ProductService(IProductRepository repository, IMapper mapper)
         var productsWithDiscount = await _repository.GetFilteredProductsAsync(filter);
         return _mapper.Map<IEnumerable<ProductDto>>(productsWithDiscount);
     }
+
+    public async Task<PrecioProductoDto> GetPrecioParaVentaAsync(string id, double cantidad)
+    {
+        var product = await _repository.GetByIdAsync(id);
+        if (product is null)
+            throw new DomainException($"Producto con código de barras '{id}' no encontrado.");
+
+        var descuento = product.Descuento;
+        bool aplicaDescuento = descuento is not null
+            && descuento.Status == 1
+            && cantidad >= descuento.CantidadMinima
+            && descuento.PrecioDescuento.HasValue;
+
+        var precio = aplicaDescuento ? descuento!.PrecioDescuento!.Value : product.Precio;
+        return new PrecioProductoDto(precio, aplicaDescuento);
+    }
+
+    public async Task RenameCodigoAsync(string idProducto, string nuevoCodigo)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(nuevoCodigo, nameof(nuevoCodigo));
+
+        var product = await _repository.GetByIdAsync(idProducto);
+        if (product is null)
+            throw new DomainException($"Producto con código de barras '{idProducto}' no encontrado.");
+
+        if (await _repository.ExistsByIdProductoAsync(nuevoCodigo))
+            throw new DomainException($"Ya existe un producto con el código '{nuevoCodigo}'.");
+
+        await _repository.UpdateIdProductoAsync(idProducto, nuevoCodigo);
+    }
 }

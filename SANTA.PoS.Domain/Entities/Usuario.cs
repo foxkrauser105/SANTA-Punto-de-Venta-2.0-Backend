@@ -20,5 +20,7 @@ public partial class Usuario
 
     public DateTime FechaUltAct { get; set; }
 
+    public string Rol { get; set; } = "User";
+
     public virtual ICollection<Cliente> Clientes { get; set; } = new List<Cliente>();
 }

@@ -12,7 +12,7 @@ public partial class RegistroVenta
 
     public double Cantidad { get; set; }
 
-    public int? Descuento { get; set; }
+    public bool Descuento { get; set; }
 
     public int? Numcliente { get; set; }
 

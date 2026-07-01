@@ -23,4 +23,18 @@ public class ProductRepository(SantaContext context) : BaseRepository<Producto, 
     {
         return await GetDbSet().Include(p => p.Descuento).Where(predicate).ToListAsync();
     }
+
+    public async Task<bool> ExistsByIdProductoAsync(string idProducto)
+    {
+        return await GetDbSet().AnyAsync(p => p.IdProducto == idProducto);
+    }
+
+    public async Task UpdateIdProductoAsync(string oldIdProducto, string newIdProducto)
+    {
+        var producto = await GetByIdAsync(oldIdProducto)
+            ?? throw new InvalidOperationException($"Producto '{oldIdProducto}' no encontrado.");
+        producto.IdProducto = newIdProducto;
+        _context.Productos.Update(producto);
+        await _context.SaveChangesAsync();
+    }
 }

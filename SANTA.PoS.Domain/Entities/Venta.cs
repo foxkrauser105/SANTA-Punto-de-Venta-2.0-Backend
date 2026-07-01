@@ -8,5 +8,5 @@ public partial class Venta
 
     public DateOnly Fecha { get; set; }
 
-    public virtual ICollection<RegistroVenta> RegistroVenta { get; set; } = new List<RegistroVenta>();
+    public virtual ICollection<RegistroVenta> RegistroVentas { get; set; } = new List<RegistroVenta>();
 }

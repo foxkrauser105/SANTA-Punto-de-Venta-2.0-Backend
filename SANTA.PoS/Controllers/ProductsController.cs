@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SANTA.PoS.Business.DTOs;
 using SANTA.PoS.Business.Services;
 
@@ -6,6 +7,7 @@ namespace SANTA.PoS.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ProductsController(ProductService productService) : ControllerBase
 {
     private readonly ProductService _productService = productService;
@@ -67,9 +69,25 @@ public class ProductsController(ProductService productService) : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> DeleteProduct(string id)
     {
         await _productService.DeleteProductAsync(id);
+        return NoContent();
+    }
+
+    [HttpGet("{id}/precio")]
+    public async Task<IActionResult> GetPrecioParaVenta(string id, [FromQuery] double cantidad = 0)
+    {
+        var precio = await _productService.GetPrecioParaVentaAsync(id, cantidad);
+        return Ok(precio);
+    }
+
+    [HttpPatch("{id}/codigo")]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> RenameCodigo(string id, [FromBody] RenameProductoDto dto)
+    {
+        await _productService.RenameCodigoAsync(id, dto.NuevoCodigo);
         return NoContent();
     }
 }

@@ -36,6 +36,10 @@ public partial class SantaContext : DbContext
 
     public virtual DbSet<Venta> Venta { get; set; }
 
+    public virtual DbSet<Categoria> Categorias { get; set; }
+
+    public virtual DbSet<RequisicionItem> RequisicionItems { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Modern_Spanish_CI_AS");
@@ -277,7 +281,7 @@ public partial class SantaContext : DbContext
                 .HasForeignKey(d => d.ProductoId)
                 .HasConstraintName("FK_registro_ventas_productos");
 
-            entity.HasOne(d => d.IdVentaNavigation).WithMany(p => p.RegistroVenta)
+            entity.HasOne(d => d.IdVentaNavigation).WithMany(p => p.RegistroVentas)
                 .HasForeignKey(d => d.IdVenta)
                 .HasConstraintName("FK_registro_ventas_venta");
         });
@@ -320,6 +324,11 @@ public partial class SantaContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("telefono");
+            entity.Property(e => e.Rol)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasDefaultValue("User")
+                .HasColumnName("rol");
         });
 
         modelBuilder.Entity<VentaDia>(entity =>
@@ -382,6 +391,40 @@ public partial class SantaContext : DbContext
             entity.Property(e => e.ImporteVenta)
                 .HasColumnType("decimal(16, 2)")
                 .HasColumnName("venta");
+        });
+
+        modelBuilder.Entity<Categoria>(entity =>
+        {
+            entity.HasKey(e => e.Nombre);
+
+            entity.ToTable("categorias");
+
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("nombre");
+        });
+
+        modelBuilder.Entity<RequisicionItem>(entity =>
+        {
+            entity.HasKey(e => new { e.Usuclave, e.ProductoId });
+
+            entity.ToTable("requisicion");
+
+            entity.Property(e => e.Usuclave)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("usuclave");
+            entity.Property(e => e.ProductoId).HasColumnName("id_producto");
+            entity.Property(e => e.Cantidad).HasColumnName("cantidad");
+
+            entity.HasOne(d => d.Producto).WithMany()
+                .HasForeignKey(d => d.ProductoId)
+                .HasConstraintName("FK_requisicion_productos");
+
+            entity.HasOne(d => d.Usuario).WithMany()
+                .HasForeignKey(d => d.Usuclave)
+                .HasConstraintName("FK_requisicion_usuarios");
         });
 
         OnModelCreatingPartial(modelBuilder);

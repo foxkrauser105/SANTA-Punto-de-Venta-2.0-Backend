@@ -18,7 +18,7 @@ public partial class RegistroNotasCredito
 
     public DateTime FechaSurtido { get; set; }
 
-    public int Descuento { get; set; }
+    public bool Descuento { get; set; }
 
     public virtual Producto Producto { get; set; } = null!;
 }
